@@ -53,7 +53,7 @@ class filter_fulltranslate extends moodle_text_filter {
     }
 
     public function get_translation($text, $language, $format) {
-        global $DB, $CFG;
+        global $DB, $CFG, $SESSION;
         $hashkey = sha1(trim($text));
         $translatedtext = $DB->get_field(self::TABLENAME, 'translation', ['hashkey' => $hashkey, 'lang' => $language]);
         if ($translatedtext) {
@@ -63,6 +63,13 @@ class filter_fulltranslate extends moodle_text_filter {
         }
         if (has_capability('filter/fulltranslate:edittranslations', $this->context)) {
             $id = $DB->get_field(self::TABLENAME, 'id', ['hashkey' => $hashkey, 'lang' => $language]);
+
+            if (!isset($SESSION->filter_fulltranslate)) {
+                $SESSION->filter_fulltranslate = new stdClass();
+                $SESSION->filter_fulltranslate->strings = [];
+            } else {
+                $SESSION->filter_fulltranslate->strings[$id] = $translatedtext;
+            }
             $translatedtext .= '<a target="_blank" data-action="translation-edit" data-recordid="'.$id.'" href="'.$CFG->wwwroot.'/admin/tool/translationmanager/edit.php?id='.$id.'">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
         }

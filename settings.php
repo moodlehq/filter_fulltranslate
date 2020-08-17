@@ -21,4 +21,6 @@ if ($ADMIN->fulltree) {
         , get_string('apikey_desc', 'filter_fulltranslate'), null, PARAM_ALPHANUM, 15));
     $settings->add(new admin_setting_configcheckbox('filter_fulltranslate/usegoogle', get_string('usegoogle', 'filter_fulltranslate'),
         get_string('usegoogle_desc', 'filter_fulltranslate'), false));
+    $settings->add(new admin_setting_configcheckbox('filter_fulltranslate/showstringsinfooter', get_string('showstringsinfooter', 'filter_fulltranslate'),
+        get_string('showstringsinfooter_desc', 'filter_fulltranslate'), false));
 }

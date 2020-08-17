@@ -88,6 +88,11 @@ function xmldb_filter_fulltranslate_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2020042905, 'filter', 'fulltranslate');
     }
 
+    if ($oldversion < 2020042906) {
+        // Fulltranslate savepoint reached.
+        upgrade_plugin_savepoint(true, 2020042906, 'filter', 'fulltranslate');
+    }
+
 
 
 }

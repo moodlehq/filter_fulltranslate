@@ -29,5 +29,7 @@ $string['apikey'] = 'API Key for Google translate';
 $string['apikey_desc'] = 'You need to get an API key from Google cloud to use the translate api';
 $string['edittranslation'] = 'Edit translation';
 $string['filtername'] = 'Fulltranslate';
+$string['showstringsinfooter'] = 'Show strings in footer';
+$string['showstringsinfooter_desc'] = 'Enable this if you want to see a list of strings that the filter translated on the page to be printed before the footer';
 $string['usegoogle'] = 'Use Google';
 $string['usegoogle_desc'] = 'Check this checkbox if you want the plugin to use the Google translate api, otherwise auto generated translations are same as original';
