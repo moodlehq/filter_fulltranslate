@@ -55,7 +55,7 @@ class filter_fulltranslate extends moodle_text_filter {
     public function get_translation($text, $language, $format) {
         global $DB, $CFG, $SESSION;
         $hashkey = sha1(trim($text));
-        $translatedtext = $DB->get_field(self::TABLENAME, 'translation', ['hashkey' => $hashkey, 'lang' => $language]);
+        $translatedtext = $DB->get_field(self::TABLENAME, 'translation', ['hashkey' => $hashkey, 'lang' => $language], IGNORE_MULTIPLE);
         if ($translatedtext) {
             $DB->set_field(self::TABLENAME, 'lastaccess', time(), ['hashkey' => $hashkey, 'lang' => $language]);
         } else {
