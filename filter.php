@@ -55,14 +55,20 @@ class filter_fulltranslate extends moodle_text_filter {
     public function get_translation($text, $language, $format) {
         global $DB, $CFG, $SESSION;
         $hashkey = sha1(trim($text));
-        $translatedtext = $DB->get_field(self::TABLENAME, 'translation', ['hashkey' => $hashkey, 'lang' => $language], IGNORE_MULTIPLE);
-        if ($translatedtext) {
+        $records = $DB->get_records(self::TABLENAME, ['hashkey' => $hashkey, 'lang' => $language], 'id ASC', 'translation', 0, 1);
+        if (isset(reset($records)->translation)) {
+            $translatedtext = reset($records)->translation;
+        }
+
+        if (isset($translatedtext)) {
             $DB->set_field(self::TABLENAME, 'lastaccess', time(), ['hashkey' => $hashkey, 'lang' => $language]);
         } else {
             $translatedtext = $this->generate_translation_update_database($text, $language, $hashkey, $format);
         }
         if (has_capability('filter/fulltranslate:edittranslations', $this->context)) {
-            $id = $DB->get_field(self::TABLENAME, 'id', ['hashkey' => $hashkey, 'lang' => $language]);
+
+            $records =$DB->get_records(self::TABLENAME, ['hashkey' => $hashkey, 'lang' => $language], 'id ASC', 'id', 0, 1);
+            $id = reset($records)->id;
 
             if (!isset($SESSION->filter_fulltranslate)) {
                 $SESSION->filter_fulltranslate = new stdClass();
