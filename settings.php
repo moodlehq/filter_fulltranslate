@@ -18,7 +18,7 @@ defined('MOODLE_INTERNAL') || die();
 
 if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configtext('filter_fulltranslate/apikey', get_string('apikey', 'filter_fulltranslate')
-        , get_string('apikey_desc', 'filter_fulltranslate'), null, PARAM_ALPHANUM, 15));
+        , get_string('apikey_desc', 'filter_fulltranslate'), null, PARAM_ALPHANUMEXT, 40));
     $settings->add(new admin_setting_configcheckbox('filter_fulltranslate/usegoogle', get_string('usegoogle', 'filter_fulltranslate'),
         get_string('usegoogle_desc', 'filter_fulltranslate'), false));
     $settings->add(new admin_setting_configcheckbox('filter_fulltranslate/showstringsinfooter', get_string('showstringsinfooter', 'filter_fulltranslate'),
