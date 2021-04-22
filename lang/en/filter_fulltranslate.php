@@ -31,5 +31,7 @@ $string['edittranslation'] = 'Edit translation';
 $string['filtername'] = 'Content translation filter';
 $string['showstringsinfooter'] = 'Show strings in footer';
 $string['showstringsinfooter_desc'] = 'Enable this if you want to see a list of strings that the filter translated on the page to be printed before the footer';
+$string['translatewhensitedefault'] = 'Translate content for default language';
+$string['translatewhensitedefault_desc'] = 'Enable this if content will be input in a variety of languages.';
 $string['usegoogle'] = 'Use Google';
 $string['usegoogle_desc'] = 'Check this checkbox if you want the plugin to use the Google translate api, otherwise auto generated translations are same as original';

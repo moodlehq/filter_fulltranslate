@@ -23,4 +23,6 @@ if ($ADMIN->fulltree) {
         get_string('usegoogle_desc', 'filter_fulltranslate'), false));
     $settings->add(new admin_setting_configcheckbox('filter_fulltranslate/showstringsinfooter', get_string('showstringsinfooter', 'filter_fulltranslate'),
         get_string('showstringsinfooter_desc', 'filter_fulltranslate'), false));
+    $settings->add(new admin_setting_configcheckbox('filter_fulltranslate/translatewhensitedefault', get_string('translatewhensitedefault', 'filter_fulltranslate'),
+        get_string('translatewhensitedefault_desc', 'filter_fulltranslate'), false));
 }
