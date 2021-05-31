@@ -65,7 +65,7 @@ class filter_fulltranslate extends moodle_text_filter {
         } else {
             $translatedtext = $this->generate_translation_update_database($text, $language, $hashkey, $format);
         }
-        if (has_capability('filter/fulltranslate:edittranslations', $this->context)) {
+        if (empty(WS_SERVER) && has_capability('filter/fulltranslate:edittranslations', $this->context)) {
 
             $records =$DB->get_records(self::TABLENAME, ['hashkey' => $hashkey, 'lang' => $language], 'id ASC', 'id', 0, 1);
             $id = reset($records)->id;
