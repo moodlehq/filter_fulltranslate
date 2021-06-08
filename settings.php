@@ -25,4 +25,6 @@ if ($ADMIN->fulltree) {
         get_string('showstringsinfooter_desc', 'filter_fulltranslate'), false));
     $settings->add(new admin_setting_configcheckbox('filter_fulltranslate/translatewhensitedefault', get_string('translatewhensitedefault', 'filter_fulltranslate'),
         get_string('translatewhensitedefault_desc', 'filter_fulltranslate'), false));
+    $settings->add(new admin_setting_configcheckbox('filter_fulltranslate/skipmlangtags', get_string('skipmlangtags', 'filter_fulltranslate'),
+        get_string('skipmlangtags_desc', 'filter_fulltranslate'), false));
 }
