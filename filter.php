@@ -52,6 +52,34 @@ class filter_fulltranslate extends moodle_text_filter {
         return $this->get_translation($text, $language, $format);
     }
 
+    private function containsmlangtags($text) {
+        $patternstocheck = [];
+
+        $patternstocheck[] = '/{\s*mlang\s+(                               # Look for the leading {mlang
+                                    (?:[a-z0-9_-]+)             # At least one language must be present
+                                                                # (but dont capture it individually).
+                                    (?:\s*,\s*[a-z0-9_-]+\s*)*  # More can follow, separated by commas
+                                                                # (again dont capture them individually).
+                                )\s*}                           # Capture the language list as a single capture.
+                   (.*?)                                        # Now capture the text to be filtered.
+                   {\s*mlang\s*}                                # And look for the trailing {mlang}.
+                   /isx';
+
+        if (empty($CFG->filter_multilang_force_old) and !empty($CFG->filter_multilang_converted)) {
+            // new syntax
+            $patternstocheck[] = '/(<span(\s+lang="[a-zA-Z0-9_-]+"|\s+class="multilang"){2}\s*>.*?<\/span>)(\s*<span(\s+lang="[a-zA-Z0-9_-]+"|\s+class="multilang"){2}\s*>.*?<\/span>)+/is';
+        } else {
+            // old syntax
+            $patternstocheck[] = '/(<(?:lang|span) lang="[a-zA-Z0-9_-]*".*?>.*?<\/(?:lang|span)>)(\s*<(?:lang|span) lang="[a-zA-Z0-9_-]*".*?>.*?<\/(?:lang|span)>)+/is';
+        }
+
+        foreach ($patternstocheck as $patterntocheck) {
+            if (preg_match($patterntocheck, $text)) {
+                return true;
+            }
+        }
+    }
+
     public function get_translation($text, $language, $format) {
         global $DB, $CFG, $SESSION;
         $hashkey = sha1(trim($text));
@@ -111,6 +139,11 @@ class filter_fulltranslate extends moodle_text_filter {
         if (get_config('filter_fulltranslate', 'usegoogle') ==  0) {
             return $text;
         }
+
+        if (!empty(get_config('filter_fulltranslate', 'skipmlangtags')) && $this->containsmlangtags($text)) {
+            return $text;
+        }
+
         $language = str_replace('_wp', '', $language);
         require_once($CFG->libdir. "/filelib.php");
         $curl = new curl();
