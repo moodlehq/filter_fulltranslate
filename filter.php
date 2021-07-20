@@ -36,7 +36,7 @@ class filter_fulltranslate extends moodle_text_filter {
         }
         $language = current_language();
 
-        if (empty(get_config('filter_fulltranslate', 'translatewhensitedefault')) && $CFG->lang == $language) {
+        if ($CFG->lang === $language && empty(get_config('filter_fulltranslate', 'translatewhensitedefault'))) {
             return $text;
         }
 
