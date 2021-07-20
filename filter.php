@@ -52,7 +52,7 @@ class filter_fulltranslate extends moodle_text_filter {
         return $this->get_translation($text, $language, $format);
     }
 
-    private function containsmlangtags($text) {
+    protected function contains_multilang_tags($text) {
         $patternstocheck = [];
 
         $patternstocheck[] = '/{\s*mlang\s+(                               # Look for the leading {mlang
@@ -140,7 +140,7 @@ class filter_fulltranslate extends moodle_text_filter {
             return $text;
         }
 
-        if (!empty(get_config('filter_fulltranslate', 'skipmlangtags')) && $this->containsmlangtags($text)) {
+        if (!empty(get_config('filter_fulltranslate', 'skipmlangtags')) && $this->contains_multilang_tags($text)) {
             return $text;
         }
 
